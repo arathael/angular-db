@@ -38,9 +38,7 @@ dbService.provider('db', function() {
           .filter(key, value)
           .execute()
           .then(function(array) {
-            if (typeof onSuccess === 'function') {
-              onSuccess(array);
-            }
+            if (typeof onSuccess === 'function') onSuccess(array);
             if ( ! $rootScope.$$phase) $rootScope.$apply();
           });
       });
