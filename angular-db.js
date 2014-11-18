@@ -15,7 +15,7 @@ dbService.provider('db', function() {
     var server = null;
     var objectStore = null;
 
-    request.done(function(s) {
+    request.then(function(s) {
       console.log('資料庫準備完成');
       server = s;
       deferred.resolve();
@@ -39,7 +39,7 @@ dbService.provider('db', function() {
           .query()
           .filter(key, value)
           .execute()
-          .done(function(array) {
+          .then(function(array) {
             console.log('資料表查詢成功: ', array);
             if (typeof onSuccess === 'function') onSuccess(array);
             if ( ! $rootScope.$$phase) $rootScope.$apply();
@@ -52,7 +52,7 @@ dbService.provider('db', function() {
       execute(function(connection) {
         connection[self.objectStore]
           .update.apply(null, array)
-          .done(function(array) {
+          .then(function(array) {
             console.log('資料表更新成功: ', array);
             if (typeof onSuccess === 'function') onSuccess(array);
             if ( ! $rootScope.$$phase) $rootScope.$apply();
@@ -67,7 +67,7 @@ dbService.provider('db', function() {
           .query()
           .filter()
           .execute()
-          .done(function(array) {
+          .then(function(array) {
             console.log('資料表查詢成功: ', array);
             if (typeof onSuccess === 'function') onSuccess(array);
             if ( ! $rootScope.$$phase) $rootScope.$apply();
