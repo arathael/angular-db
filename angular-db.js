@@ -16,7 +16,6 @@ dbService.provider('db', function() {
     var objectStore = null;
 
     request.then(function(s) {
-      console.log('資料庫準備完成');
       server = s;
       deferred.resolve();
       if ( ! $rootScope.$$phase) $rootScope.$apply();
@@ -33,27 +32,25 @@ dbService.provider('db', function() {
     };
 
     var get = function(key, value, onSuccess, onError) {
-      console.log('資料表查詢開始');
       execute(function(connection) {
         connection[self.objectStore]
           .query()
           .filter(key, value)
           .execute()
           .then(function(array) {
-            console.log('資料表查詢成功: ', array);
-            if (typeof onSuccess === 'function') onSuccess(array);
+            if (typeof onSuccess === 'function') {
+              onSuccess(array);
+            }
             if ( ! $rootScope.$$phase) $rootScope.$apply();
           });
       });
     };
 
     var putBatch = function(array, onSuccess, onError) {
-      console.log('資料表更新開始');
       execute(function(connection) {
         connection[self.objectStore]
           .update.apply(null, array)
           .then(function(array) {
-            console.log('資料表更新成功: ', array);
             if (typeof onSuccess === 'function') onSuccess(array);
             if ( ! $rootScope.$$phase) $rootScope.$apply();
           });
@@ -61,14 +58,12 @@ dbService.provider('db', function() {
     };
 
     var getBatch = function(onSuccess, onError) {
-      console.log('資料表查詢開始');
       execute(function(connection) {
         connection[self.objectStore]
           .query()
           .filter()
           .execute()
           .then(function(array) {
-            console.log('資料表查詢成功: ', array);
             if (typeof onSuccess === 'function') onSuccess(array);
             if ( ! $rootScope.$$phase) $rootScope.$apply();
           });
